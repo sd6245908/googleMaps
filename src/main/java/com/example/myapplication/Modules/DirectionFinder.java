@@ -47,14 +47,18 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
 
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + R.string.API_key;
+        String url = DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + "AIzaSyCZ3rrIfUQQIE8pE7VUfplzsL_1Hvx37Wk";
+
+        return url;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
+
             String link = params[0];
+            System.out.println("111111111111111111111111111..........................."+link);
             try {
                 URL url = new URL(link);
                 InputStream is = url.openConnection().getInputStream();
@@ -65,7 +69,7 @@ public class DirectionFinder {
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line + "\n");
                 }
-
+                System.out.println("3333333333333333333333333333..........................."+buffer.toString());
                 return buffer.toString();
 
             } catch (MalformedURLException e) {
@@ -89,7 +93,7 @@ public class DirectionFinder {
     private void parseJSon(String data) throws JSONException {
         if (data == null)
             return;
-
+        System.out.println("3333333333333333333333333333..........................."+data);
         List<Route> routes = new ArrayList<Route>();
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
